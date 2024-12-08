@@ -1,0 +1,34 @@
+{% for food in food_items %}
+<div class="food-item">
+  <div class="food-img-container">
+    <img src="{{ food.image }}" alt="{{ food.name }}" class="food-img" />
+    <div class="overlay">
+      {% if food.diabetic_friendly %}
+      <div class="overlay-icon-wrapper">
+        <img
+          src="../static/img/sugar.svg"
+          alt="مناسب للسكري"
+          class="overlay-icon"
+        />
+      </div>
+      {% endif %} {% if food.high_blood_pressure_friendly %}
+      <div class="overlay-icon-wrapper">
+        <img
+          src="../static/img/blood_pressure.svg"
+          alt="مناسب لضغط الدم المرتفع"
+          class="overlay-icon"
+        />
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="food-details">
+    <h3>{{ food.name }}</h3>
+    <p>{{ food.description }}</p>
+    <p class="price">{{ food.price }} ريال</p>
+    <button class="add-to-cart-btn" data-food-id="{{ food.id }}">
+      أضف إلى السلة
+    </button>
+  </div>
+</div>
+{% endfor %}

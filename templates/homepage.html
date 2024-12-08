@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الصفحة الرئيسية</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/homepage.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <div class="logo-background">
+            <a href="/">
+              <img src="../static/img/logo.png" alt="صحي ولذيذ" />
+            </a>
+          </div>
+          <a href="/" class="logo">صحي ولذيذ</a>
+        </div>
+        <nav>
+          <a href="logout">تسجيل الخروج</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul>
+          <li><a href="homepage" class="active">أطعمتنا المختلفة</a></li>
+          <li><a href="cart">سلة التسوق</a></li>
+          <li><a href="orders">الطلبات السابقة</a></li>
+        </ul>
+
+        <!-- Promotional Rating Section -->
+        <div class="rating-promo">
+          <p>قيم الموقع لتحسين تجربتك!</p>
+
+          <!-- Star Rating System -->
+          <div class="rating-stars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+
+          <!-- Comment Box -->
+          <textarea
+            class="comment-box"
+            placeholder="أضف تعليقك هنا..."
+            rows="3"
+          ></textarea>
+          <button class="submit-btn">إرسال</button>
+        </div>
+      </aside>
+
+      <!-- JavaScript for Star Rating -->
+      <script src="../static/js/rating.js" type="text/JavaScript"></script>
+
+      <!-- Main content area -->
+      <main class="main-content">
+        <!-- Filter Section -->
+        <section class="filter">
+          <input
+            type="text"
+            placeholder="ابحث عن طعام..."
+            class="search-input"
+          />
+          <div class="filter-buttons">
+            <label>
+              <input class="status-input" type="checkbox" name="diabetic" />
+              <img
+                src="../static/img/sugar.svg"
+                alt="مناسب للسكري"
+                class="status-icon"
+              />
+            </label>
+            <label>
+              <input
+                class="status-input"
+                type="checkbox"
+                name="high_blood_pressure"
+              />
+              <img
+                src="../static/img/blood_pressure.svg"
+                alt="مناسب لضغط الدم المرتفع"
+                class="status-icon"
+              />
+            </label>
+          </div>
+        </section>
+
+        <!-- Food Grid Section -->
+        <section class="food-grid">
+          {% for food in food_items %}
+          <div class="food-item">
+            <div class="food-img-container">
+              <img
+                src="{{ food.image }}"
+                alt="{{ food.name }}"
+                class="food-img"
+              />
+              <div class="overlay">
+                {% if food.diabetic_friendly %}
+                <div class="overlay-icon-wrapper">
+                  <img
+                    src="../static/img/sugar.svg"
+                    alt="مناسب للسكري"
+                    class="overlay-icon"
+                  />
+                </div>
+                {% endif %} {% if food.high_blood_pressure_friendly %}
+                <div class="overlay-icon-wrapper">
+                  <img
+                    src="../static/img/blood_pressure.svg"
+                    alt="مناسب لضغط الدم المرتفع"
+                    class="overlay-icon"
+                  />
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="food-details">
+              <h3>{{ food.name }}</h3>
+              <p>{{ food.description }}</p>
+              <p class="price">{{ food.price }} ريال</p>
+              <button class="add-to-cart-btn" data-food-id="{{ food.id }}">
+                أضف إلى السلة
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 صحي ولذيذ. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".add-to-cart-btn");
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", async () => {
+            const foodId = button.getAttribute("data-food-id");
+            const userId = 1; // Replace this with actual user ID, e.g., from session
+
+            try {
+              const response = await fetch("/add_to_cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ food_id: foodId, user_id: userId }),
+              });
+
+              const result = await response.json();
+              if (response.ok) {
+                alert(result.message);
+              } else {
+                alert(result.error || "فشلت إضافة العنصر إلى سلة التسوق");
+              }
+            } catch (error) {
+              console.error("Error:", error);
+            }
+          });
+        });
+      });
+    </script>
+    <script>
+      function applyFilters() {
+        const search = document.querySelector(".search-input").value;
+        const diabetic = document.querySelector(
+          'input[name="diabetic"]'
+        ).checked;
+        const highBloodPressure = document.querySelector(
+          'input[name="high_blood_pressure"]'
+        ).checked;
+
+        const queryString = new URLSearchParams({
+          search: search,
+          diabetic: diabetic,
+          high_blood_pressure: highBloodPressure,
+        });
+
+        fetch(`/homepage?${queryString.toString()}`, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        })
+          .then((response) => response.text())
+          .then((html) => {
+            document.querySelector(".food-grid").innerHTML = html;
+          })
+          .catch((error) =>
+            console.error("Error fetching filtered food items:", error)
+          );
+      }
+
+      document
+        .querySelector(".search-input")
+        .addEventListener("input", applyFilters);
+      document
+        .querySelector('input[name="diabetic"]')
+        .addEventListener("change", applyFilters);
+      document
+        .querySelector('input[name="high_blood_pressure"]')
+        .addEventListener("change", applyFilters);
+    </script>
+
+    <script src="../static/js/rating.js"></script>
+  </body>
+</html>

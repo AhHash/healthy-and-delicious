@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صحي ولذيذ - الطلبات السابقة</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/orders.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <div class="logo-background">
+            <a href="/">
+              <img src="../static/img/logo.png" alt="صحي ولذيذ" />
+            </a>
+          </div>
+          <a href="/" class="logo">صحي ولذيذ</a>
+        </div>
+        <nav>
+          <a href="logout">تسجيل الخروج</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <aside class="sidebar">
+        <ul>
+          <li><a href="homepage">أطعمتنا المختلفة</a></li>
+          <li><a href="cart">سلة التسوق</a></li>
+          <li><a href="orders" class="active">الطلبات السابقة</a></li>
+        </ul>
+        <div class="rating-promo">
+          <p>قيم الموقع لتحسين تجربتك!</p>
+          <div class="rating-stars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <textarea
+            class="comment-box"
+            placeholder="أضف تعليقك هنا..."
+            rows="3"
+          ></textarea>
+          <button class="submit-btn">إرسال</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section class="orders-list">
+          {% for order in orders %}
+          <div class="order-item">
+            <div class="order-info">
+              <h3>طلب #{{ order.order_id }}</h3>
+              <p>التاريخ: {{ order.date }}</p>
+              <p>
+                الحالة:
+                <span
+                  class="status {% if order.status == 'مكتمل' %}completed{% else %}pending{% endif %}"
+                  >{{ order.status }}</span
+                >
+              </p>
+            </div>
+            <div class="order-details">
+              <ul>
+                {% for item in order.order_items %}
+                <li>
+                  <img src="{{ item.image }}" alt="{{ item.name }}" />
+                  <p>
+                    {{ item.name }} <br />
+                    {{ item.quantity }} قطعة
+                  </p>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="total-price">
+              <p>المجموع</p>
+              <p class="price">{{ order.total_price }} ريال</p>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 صحي ولذيذ. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="../static/js/rating.js"></script>
+  </body>
+</html>

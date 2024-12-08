@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>التسجيل</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/signup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <div class="logo-background">
+            <a href="index">
+              <img src="../static/img/logo.png" alt="صحي ولذيذ" />
+            </a>
+          </div>
+          <a href="index" class="logo">صحي ولذيذ</a>
+        </div>
+        <nav>
+          <a href="reviews">آراء العملاء</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="signup-form">
+        <h1>انشاء حساب جديد</h1>
+        <form action="/signup" method="POST">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %}
+          <ul class="flash-messages">
+            {% for category, message in messages %}
+            <li class="flash-message {{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %} {% endwith %}
+          <label for="name">الاسم:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">البريد الإلكتروني:</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="password">كلمة المرور:</label>
+          <input type="password" id="password" name="password" required />
+
+          <label for="age">العمر:</label>
+          <input type="number" id="age" name="age" min="1" required />
+
+          <label for="status">الحالة الصحية:</label>
+          <div class="status-options">
+            <label>
+              <input
+                type="radio"
+                name="status"
+                value="no_disease"
+                required
+                checked
+              />
+              <img
+                src="../static/img/happy.svg"
+                alt="بدون أمراض"
+                class="status-icon"
+              />
+              بدون أمراض
+            </label>
+            <label>
+              <input type="radio" name="status" value="diabetic" required />
+              <img
+                src="../static/img/sugar.svg"
+                alt="مريض سكري"
+                class="status-icon"
+              />
+              مريض سكري
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="status"
+                value="high_blood_pressure"
+                required
+              />
+              <img
+                src="../static/img/blood_pressure.svg"
+                alt="ضغط دم مرتفع"
+                class="status-icon"
+              />
+              ضغط دم مرتفع
+            </label>
+          </div>
+
+          <button type="submit" class="submit-btn">تسجيل</button>
+        </form>
+        <p class="switch-link">لديك حساب؟ <a href="login">سجل الدخول</a></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 صحي ولذيذ. جميع الحقوق محفوظة.</p>
+    </footer>
+  </body>
+</html>

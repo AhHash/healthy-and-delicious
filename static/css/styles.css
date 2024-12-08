@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Rubik";
+  src: url("../fonts/Rubik/Rubik-VariableFont_wght.ttf");
+}
+
+:root {
+  --main-color: #28554e;
+  --accent-color: #e8b50f;
+}
+
+body {
+  font-family: Rubik, Arial, sans-serif;
+}
+
+button {
+  font-family: inherit;
+}

@@ -1,0 +1,327 @@
+/* Basic reset and body styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.6;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+header {
+  background-color: var(--main-color);
+  padding: 0.5em 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar .logo {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-background {
+  height: 3.5rem;
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.1rem;
+  margin-left: 1rem;
+}
+
+.logo-background img {
+  height: 100%;
+}
+
+.navbar nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.navbar nav a:hover {
+  text-decoration: underline;
+}
+
+/* Layout container */
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+/* Sidebar styling */
+.sidebar {
+  width: 200px;
+  background-color: #333;
+  padding: 1em;
+  border-radius: 8px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 1em 0;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/* Rating Promotional Section */
+.rating-promo {
+  background-color: #444;
+  padding: 1em;
+  margin-top: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.rating-promo p {
+  font-size: 0.9em;
+  color: var(--accent-color);
+  margin-bottom: 0.5em;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+/* Star styling */
+.star {
+  font-size: 1.5em;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.active {
+  color: var(--accent-color);
+}
+
+/* Comment Box */
+.comment-box {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  resize: none;
+  font-size: 0.9em;
+  font-family: "Rubik";
+}
+
+/* Submit Button */
+.submit-btn {
+  background-color: var(--accent-color);
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* Main content styling */
+.main-content {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* Filter section */
+.filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.8em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+.filter-buttons label {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.status-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.status-input {
+  visibility: hidden;
+}
+
+.filter-buttons img {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+.filter-buttons input:checked + img {
+  filter: invert(27%) sepia(55%) saturate(355%) hue-rotate(121deg)
+    brightness(91%) contrast(92%);
+  transform: scale(1.4);
+  border: 2px solid black;
+}
+
+/* Food grid styling */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  height: calc(100vh - (7rem + 175px));
+  overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.food-grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.food-grid {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* .food-item updated styling */
+.food-item {
+  background-color: #fff;
+  border-radius: 8px;
+  height: max-content;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.food-img-container {
+  position: relative;
+}
+
+.food-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  border-bottom-left-radius: 8px;
+  overflow: hidden;
+}
+
+.overlay-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px 5px 0px 5px;
+}
+
+.overlay-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Food details */
+.food-details {
+  padding: 0 1em 1rem 1rem;
+  position: relative;
+}
+
+.food-details h3 {
+  font-size: 1.2em;
+  color: #333;
+}
+
+.food-details p {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.price {
+  color: var(--main-color);
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Add to Cart button */
+.add-to-cart-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: var(--main-color);
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.add-to-cart-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* Footer styling */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1em 0;
+  margin-top: 2em;
+}
+
+footer p {
+  font-size: 0.9em;
+}

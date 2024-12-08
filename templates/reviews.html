@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>آراء العملاء - صحي ولذيذ</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/reviews.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <div class="logo-background">
+            <a href="/">
+              <img src="../static/img/logo.png" alt="صحي ولذيذ" />
+            </a>
+          </div>
+          <a href="/" class="logo">صحي ولذيذ</a>
+        </div>
+        <nav>
+          <a href="login">تسجيل الدخول</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="reviews-section">
+        <h2>آراء عملائنا</h2>
+        <div class="reviews-container">
+          <!-- Placeholder for review items -->
+          {% for review in reviews %}
+          <div class="review-item">
+            <blockquote>
+              <p>{{ review.text }}</p>
+              <cite>— {{ review.user.name }}</cite>
+            </blockquote>
+            <div class="stars">
+              {% for _ in range(review.stars_count) %} ★ {% endfor %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 صحي ولذيذ. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="../static/js/rating.js"></script>
+  </body>
+</html>

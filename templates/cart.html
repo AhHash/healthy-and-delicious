@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صحي ولذيذ - سلة التسوق</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/cart.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-container">
+          <div class="logo-background">
+            <a href="{{ url_for('index') }}">
+              <img src="../static/img/logo.png" alt="صحي ولذيذ" />
+            </a>
+          </div>
+          <a href="{{ url_for('index') }}" class="logo">صحي ولذيذ</a>
+        </div>
+        <nav>
+          <a href="{{ url_for('logout') }}">تسجيل الخروج</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul>
+          <li><a href="{{ url_for('homepage') }}">أطعمتنا المختلفة</a></li>
+          <li><a href="{{ url_for('cart') }}" class="active">سلة التسوق</a></li>
+          <li><a href="{{ url_for('orders') }}">الطلبات السابقة</a></li>
+        </ul>
+
+        <!-- Promotional Rating Section -->
+        <div class="rating-promo">
+          <p>قيم الموقع لتحسين تجربتك!</p>
+
+          <!-- Star Rating System -->
+          <div class="rating-stars">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+
+          <!-- Comment Box -->
+          <textarea
+            class="comment-box"
+            placeholder="أضف تعليقك هنا..."
+            rows="3"
+          ></textarea>
+          <button class="submit-btn">إرسال</button>
+        </div>
+      </aside>
+
+      <!-- Main content area -->
+      <main class="main-content">
+        <!-- Food Grid Section -->
+        <section class="food-grid">
+          {% for _, food in cart_items %}
+          <div class="food-item">
+            <div class="food-img-container">
+              <img
+                src="{{ food.image }}"
+                alt="{{ food.name }}"
+                class="food-img"
+              />
+              <div class="overlay">
+                {% if food.diabetic_friendly %}
+                <div class="overlay-icon-wrapper">
+                  <img
+                    src="../static/img/sugar.svg"
+                    alt="مناسب للسكري"
+                    class="overlay-icon"
+                  />
+                </div>
+                {% endif %} {% if food.high_blood_pressure_friendly %}
+                <div class="overlay-icon-wrapper">
+                  <img
+                    src="../static/img/blood_pressure.svg"
+                    alt="مناسب لضغط الدم المرتفع"
+                    class="overlay-icon"
+                  />
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="food-details">
+              <h3>{{ food.name }}</h3>
+              <p>{{ food.description }}</p>
+              <p class="price">{{ food.price }} ريال</p>
+            </div>
+          </div>
+          {% endfor %}
+        </section>
+
+        <div class="confirmation">
+          <div class="total">
+            <p class="total-text">المبلغ الإجمالي</p>
+            <h3 class="total-amount">{{ total_amount }} ريال</h3>
+          </div>
+          <form
+            class="place-order-form"
+            action="{{ url_for('place_order') }}"
+            method="post"
+          >
+            <button type="submit" class="place-order-button">
+              تأكيد الطلب
+            </button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 صحي ولذيذ. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="../static/js/rating.js"></script>
+  </body>
+</html>
